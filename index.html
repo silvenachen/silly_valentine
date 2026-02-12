@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Will you be my Valentine? 💕</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Quicksand:wght@500;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #1a0a0e 0%, #2d1b2e 30%, #1a0a0e 100%);
+      font-family: 'Quicksand', sans-serif;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* Floating hearts background */
+    .hearts-bg {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+    .heart {
+      position: absolute;
+      font-size: 1.5rem;
+      opacity: 0.15;
+      animation: float 8s ease-in-out infinite;
+    }
+    .heart:nth-child(1) { left: 10%; animation-delay: 0s; }
+    .heart:nth-child(2) { left: 25%; animation-delay: 1.5s; }
+    .heart:nth-child(3) { left: 40%; animation-delay: 3s; }
+    .heart:nth-child(4) { left: 60%; animation-delay: 2s; }
+    .heart:nth-child(5) { left: 75%; animation-delay: 4s; }
+    .heart:nth-child(6) { left: 90%; animation-delay: 0.5s; }
+    @keyframes float {
+      0%, 100% { transform: translateY(100vh) rotate(0deg); opacity: 0.15; }
+      50% { transform: translateY(-20px) rotate(10deg); opacity: 0.25; }
+    }
+
+    .container {
+      text-align: center;
+      z-index: 1;
+      padding: 2rem;
+    }
+
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.8rem, 5vw, 3rem);
+      color: #ffd4e5;
+      text-shadow: 0 0 30px rgba(255, 182, 193, 0.4);
+      margin-bottom: 2.5rem;
+      line-height: 1.3;
+    }
+
+    .buttons-wrap {
+      position: relative;
+      min-height: 140px;
+      min-width: 380px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      font-family: 'Quicksand', sans-serif;
+      font-size: 1.4rem;
+      font-weight: 600;
+      padding: 1rem 2.2rem;
+      border: none;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .btn-yes {
+      background: linear-gradient(145deg, #e91e63, #c2185b);
+      color: white;
+      box-shadow: 0 8px 30px rgba(233, 30, 99, 0.5);
+    }
+    .btn-yes:hover {
+      transform: scale(1.08);
+      box-shadow: 0 12px 40px rgba(233, 30, 99, 0.6);
+    }
+    .btn-yes:active {
+      transform: scale(1.02);
+    }
+
+    .btn-no {
+      background: linear-gradient(145deg, #424242, #212121);
+      color: #b0b0b0;
+      position: absolute;
+      left: 200px;
+      top: 0;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+    }
+    .btn-no:hover {
+      transform: scale(1.05);
+    }
+
+    /* Celebration overlay (hidden until Yes is clicked) */
+    .celebration-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.85);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 100;
+      padding: 2rem;
+      animation: fadeIn 0.5s ease;
+    }
+    .celebration-overlay.show {
+      display: flex;
+      flex-direction: column;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .celebration-message {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 6vw, 3.5rem);
+      color: #ffd4e5;
+      margin-bottom: 1.5rem;
+      text-align: center;
+    }
+
+    .celebration-meme {
+      max-width: 90%;
+      max-height: 60vh;
+      border-radius: 16px;
+      box-shadow: 0 20px 60px rgba(233, 30, 99, 0.4);
+      object-fit: contain;
+    }
+
+    .celebration-meme-placeholder {
+      width: 400px;
+      height: 300px;
+      background: linear-gradient(145deg, #2d1b2e, #1a0a0e);
+      border: 3px dashed rgba(255, 212, 229, 0.5);
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #ffd4e5;
+      font-size: 1.1rem;
+      opacity: 0.8;
+    }
+  </style>
+</head>
+<body>
+  <div class="hearts-bg">
+    <span class="heart">♥</span>
+    <span class="heart">♥</span>
+    <span class="heart">♥</span>
+    <span class="heart">♥</span>
+    <span class="heart">♥</span>
+    <span class="heart">♥</span>
+  </div>
+
+  <div class="container">
+    <h1>Kiama, will you be my Valentine?</h1>
+    <div class="buttons-wrap">
+      <button type="button" class="btn btn-yes" id="btnYes">Yes 💕</button>
+      <button type="button" class="btn btn-no" id="btnNo">No</button>
+    </div>
+  </div>
+
+  <div class="celebration-overlay" id="celebration">
+    <p class="celebration-message">Yay! You said yes! 💖</p>
+    <!-- Replace the src below with your celebration meme image -->
+    <img class="celebration-meme" id="celebrationMeme" src="celebration.jpg" alt="Celebration!" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+    <div class="celebration-meme-placeholder" id="memePlaceholder" style="display: none;">
+      Add your celebration meme as <code>celebration.jpg</code> (or .png) in this folder
+    </div>
+  </div>
+
+  <script>
+    const btnYes = document.getElementById('btnYes');
+    const btnNo = document.getElementById('btnNo');
+    const celebration = document.getElementById('celebration');
+    const celebrationMeme = document.getElementById('celebrationMeme');
+    const memePlaceholder = document.getElementById('memePlaceholder');
+
+    // Runaway "No" button: move away when cursor gets close (impossible to click!)
+    const runAwayRadius = 100;
+    const runAwaySpeed = 1.8;
+    const wrap = document.querySelector('.buttons-wrap');
+
+    function clampNoPosition() {
+      const wrapRect = wrap.getBoundingClientRect();
+      const noRect = btnNo.getBoundingClientRect();
+      const maxLeft = wrapRect.width - noRect.width - 16;
+      const maxTop = wrapRect.height - noRect.height - 16;
+      let left = parseFloat(btnNo.style.left) || 0;
+      let top = parseFloat(btnNo.style.top) || 0;
+      left = Math.max(8, Math.min(maxLeft, left));
+      top = Math.max(8, Math.min(maxTop, top));
+      btnNo.style.left = left + 'px';
+      btnNo.style.top = top + 'px';
+    }
+
+    document.addEventListener('mousemove', (e) => {
+      const wrapRect = wrap.getBoundingClientRect();
+      const noRect = btnNo.getBoundingClientRect();
+      const noCenterX = noRect.left + noRect.width / 2;
+      const noCenterY = noRect.top + noRect.height / 2;
+      const dx = e.clientX - noCenterX;
+      const dy = e.clientY - noCenterY;
+      const dist = Math.hypot(dx, dy);
+
+      if (dist < runAwayRadius && dist > 0) {
+        const angle = Math.atan2(dy, dx);
+        const move = (runAwayRadius - dist) * runAwaySpeed;
+        let left = (parseFloat(btnNo.style.left) || 0) + Math.cos(angle) * move;
+        let top = (parseFloat(btnNo.style.top) || 0) + Math.sin(angle) * move;
+        const maxLeft = wrapRect.width - noRect.width - 16;
+        const maxTop = wrapRect.height - noRect.height - 16;
+        left = Math.max(8, Math.min(maxLeft, left));
+        top = Math.max(8, Math.min(maxTop, top));
+        btnNo.style.left = left + 'px';
+        btnNo.style.top = top + 'px';
+      }
+    });
+
+    window.addEventListener('resize', clampNoPosition);
+    setTimeout(clampNoPosition, 100);
+
+    btnYes.addEventListener('click', () => {
+      celebration.classList.add('show');
+      if (celebrationMeme.complete && celebrationMeme.naturalWidth > 0) {
+        celebrationMeme.style.display = 'block';
+        memePlaceholder.style.display = 'none';
+      } else {
+        memePlaceholder.style.display = 'flex';
+      }
+    });
+
+    btnNo.addEventListener('click', (e) => {
+      e.preventDefault();
+      btnNo.style.left = (Math.random() * 150 + 20) + 'px';
+      btnNo.style.top = (Math.random() * 60 + 10) + 'px';
+    });
+  </script>
+</body>
+</html>
