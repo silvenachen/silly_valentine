@@ -67,8 +67,8 @@
 
     .buttons-wrap {
       position: relative;
-      min-height: 140px;
-      min-width: 380px;
+      min-height: 220px;
+      min-width: 520px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -88,6 +88,8 @@
     }
 
     .btn-yes {
+      font-size: 2rem;
+      padding: 1.25rem 2.8rem;
       background: linear-gradient(145deg, #e91e63, #c2185b);
       color: white;
       box-shadow: 0 8px 30px rgba(233, 30, 99, 0.5);
@@ -101,6 +103,8 @@
     }
 
     .btn-no {
+      font-size: 0.9rem;
+      padding: 0.5rem 1rem;
       background: linear-gradient(145deg, #424242, #212121);
       color: #b0b0b0;
       position: absolute;
@@ -162,6 +166,13 @@
       font-size: 1.1rem;
       opacity: 0.8;
     }
+
+    .from-name {
+      margin-top: 2rem;
+      font-size: 0.95rem;
+      color: rgba(255, 212, 229, 0.7);
+      letter-spacing: 0.05em;
+    }
   </style>
 </head>
 <body>
@@ -180,14 +191,15 @@
       <button type="button" class="btn btn-yes" id="btnYes">Yes 💕</button>
       <button type="button" class="btn btn-no" id="btnNo">No</button>
     </div>
+    <p class="from-name">— Shuyang</p>
   </div>
 
   <div class="celebration-overlay" id="celebration">
     <p class="celebration-message">Yay! You said yes! 💖</p>
     <!-- Replace the src below with your celebration meme image -->
-    <img class="celebration-meme" id="celebrationMeme" src="celebration.jpg" alt="Celebration!" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+    <img class="celebration-meme" id="celebrationMeme" src="jokebear.jpg" alt="Celebration!" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
     <div class="celebration-meme-placeholder" id="memePlaceholder" style="display: none;">
-      Add your celebration meme as <code>celebration.jpg</code> (or .png) in this folder
+      Add your celebration meme as <code>jokebear.jpg</code> in this folder
     </div>
   </div>
 
@@ -199,8 +211,8 @@
     const memePlaceholder = document.getElementById('memePlaceholder');
 
     // Runaway "No" button: move away when cursor gets close (impossible to click!)
-    const runAwayRadius = 100;
-    const runAwaySpeed = 1.8;
+    const runAwayRadius = 220;
+    const runAwaySpeed = 4.5;
     const wrap = document.querySelector('.buttons-wrap');
 
     function clampNoPosition() {
@@ -227,7 +239,7 @@
 
       if (dist < runAwayRadius && dist > 0) {
         const angle = Math.atan2(dy, dx);
-        const move = (runAwayRadius - dist) * runAwaySpeed;
+        const move = (runAwayRadius - dist) * runAwaySpeed * 0.5 + 12;
         let left = (parseFloat(btnNo.style.left) || 0) + Math.cos(angle) * move;
         let top = (parseFloat(btnNo.style.top) || 0) + Math.sin(angle) * move;
         const maxLeft = wrapRect.width - noRect.width - 16;
@@ -241,6 +253,10 @@
 
     window.addEventListener('resize', clampNoPosition);
     setTimeout(clampNoPosition, 100);
+
+    // No button can't be clicked for first 400ms so initial click often misses
+    btnNo.style.pointerEvents = 'none';
+    setTimeout(function() { btnNo.style.pointerEvents = ''; }, 400);
 
     btnYes.addEventListener('click', () => {
       celebration.classList.add('show');
